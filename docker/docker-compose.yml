@@ -1,0 +1,49 @@
+version: "3.9"
+   
+services:
+
+  from_postgres_db:
+    image: postgres
+    restart: on-failure
+    network_mode: bridge
+    container_name: postgres_test_from
+    environment:
+      - POSTGRES_DB=test
+      - POSTGRES_USER=test
+      - POSTGRES_PASSWORD=test
+      - TZ=Japan
+      - PGTZ=Japan
+      - ALLOW_IP_RANGE=0.0.0.0/0
+    ports:
+      - "54321:5432"
+    volumes:
+      - ./pg_data/data_from:/var/lib/postgresql/data
+      - ./pg_data/db_scripts/01_init.sql:/docker-entrypoint-initdb.d/01_init.sql
+
+  to_postgres_db:
+    image: postgres
+    restart: on-failure
+    network_mode: bridge
+    container_name: postgres_test_to
+    environment:
+      - POSTGRES_DB=test
+      - POSTGRES_USER=test
+      - POSTGRES_PASSWORD=test
+      - TZ=Japan
+      - PGTZ=Japan
+      - ALLOW_IP_RANGE=0.0.0.0/0
+    ports:
+      - "54322:5432"
+    volumes:
+      - ./pg_data/data_to:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pg_admin
+    environment: 
+        PGADMIN_DEFAULT_EMAIL: "test@test.com"
+        PGADMIN_DEFAULT_PASSWORD: "123456"
+    ports: 
+        - "5480:80"
+    #depends_on: 
+    #    - postgres_db
