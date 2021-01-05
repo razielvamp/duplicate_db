@@ -37,13 +37,33 @@ services:
     volumes:
       - ./pg_data/data_to:/var/lib/postgresql/data
 
-  pgadmin:
-    image: dpage/pgadmin4
-    container_name: pg_admin
-    environment: 
-        PGADMIN_DEFAULT_EMAIL: "test@test.com"
-        PGADMIN_DEFAULT_PASSWORD: "123456"
-    ports: 
-        - "5480:80"
-    #depends_on: 
-    #    - postgres_db
+  data_exporter:
+    depends_on: 
+      - from_postgres_db
+      - to_postgres_db
+    build: .
+    command: python /init_process/run.py
+    restart: "no"
+    network_mode: bridge
+    container_name: export_pg_data
+    environment:
+      - POSTGRES_DB=test
+      - POSTGRES_USER=test
+      - POSTGRES_PASSWORD=test
+      - FROM_PORT=5432
+      - TO_PORT=5432
+      - FROM_HOST=from_db
+      - TO_HOST=to_db
+    links: 
+      - from_postgres_db:from_db
+      - to_postgres_db:to_db
+
+
+  # pgadmin:
+  #   image: dpage/pgadmin4
+  #   container_name: pg_admin
+  #   environment: 
+  #       PGADMIN_DEFAULT_EMAIL: "test@test.com"
+  #       PGADMIN_DEFAULT_PASSWORD: "123456"
+  #   ports: 
+  #       - "5480:80"

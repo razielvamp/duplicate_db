@@ -30,10 +30,10 @@ CREATE TABLE "ORGANIZATION"
 );
 
 INSERT INTO "USER"(id, org_id, name, email, is_valid, created_at, updated_at) VALUES
-(DEFAULT, 1, 'John', 'john@local.host', DEFAULT, current_timestamp, current_timestamp),
-(DEFAULT, 2, 'Mary', 'mary@super.host', DEFAULT, current_timestamp, current_timestamp),
+(DEFAULT, 1, 'John', 'john@local.com', DEFAULT, current_timestamp, current_timestamp),
+(DEFAULT, 2, 'Mary', 'mary@super.co.jp', DEFAULT, current_timestamp, current_timestamp),
 (DEFAULT, NULL, 'Josh', 'josh@do.main', 'f', current_timestamp, current_timestamp),
-(DEFAULT, 2, 'Sara', 'sara@conor.here', DEFAULT, current_timestamp, current_timestamp),
+(DEFAULT, 2, 'Sara', 'sara@conor.net', DEFAULT, current_timestamp, current_timestamp),
 (DEFAULT, 16, 'LastUser', 'last@user.record', DEFAULT, current_timestamp, current_timestamp),
 (DEFAULT, 4, 'Dummy2', 'dummy@dummy.record', DEFAULT, current_timestamp, current_timestamp),
 (DEFAULT, 4, 'Dummy3', 'dummy@dummy.record', DEFAULT, current_timestamp, current_timestamp),
